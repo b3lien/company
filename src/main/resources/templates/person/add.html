@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type='text/javascript'src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+    <script type='text/javascript'>
+        $( document ).ready(function() {
+            $("#button").click(function() {
+                $.ajax({
+                    url: "/api/people/searchone",
+                    data: { surname: $("#surname").val(),field2: "hello2" }
+                }).then(function(data) {
+                    $('.greeting-id').text(data.id);
+                    $('.greeting-content').text(data.name);
+                });
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<form th:action="@{/people/create}" th:method="post">
+    <label>Name:</label>
+    <input type="text" name="name">
+    <label>Surname:</label>
+    <input type="text" name="surname">
+    <input type="submit">
+
+</form>
+<form th:action="@{/people/searchone}" th:method="get">
+    <label>Wyszukaj jednego pracownika:</label><input type="text" id="surname" name="surname" placeholder="Podaj nazwisko..">
+    <input type="submit">
+</form>
+<form th:action="@{/people/searchall}" th:method="get">
+    <label>Wyszukaj wszystkich pracowników:</label><input type="text" name="surname" placeholder="Podaj nazwisko...">
+    <input type="submit">
+</form>
+<form action="/people/remove">
+    <input type="text" name="id">
+    <input type="submit">
+</form>
+
+<button id="button">Szukaj</button>
+
+<div>
+    <p class="greeting-id">The ID is </p>
+    <p class="greeting-content">The content is </p>
+</div>
+</body>
+</html>

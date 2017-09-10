@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type='text/javascript'src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+    <script type='text/javascript'>
+        $( document ).ready(function() {
+            $("#button").click(function() {
+                $.ajax({
+                    url: "http://localhost:8080/api/person/search",
+                    data: { surname: $("#surname").val(),field2: "hello2" }
+                }).then(function(data) {
+                    $('.greeting-id').text(data.id);
+                    $('.greeting-content').text(data.name);
+                });
+            });
+        });
+
+    </script>
+
+
+</head>
+
+
+
+<body>
+
+<form th:action="@{/people/result}" th:method="get">
+    <label>Wyszukaj po nazwisku</label>
+    <input type="text" name="surname" id="surname"/>
+    <input type="submit">
+</form>
+
+<button id="button">Szukaj</button>
+
+<div>
+    <p class="greeting-id">The ID is </p>
+    <p class="greeting-content">The content is </p>
+</div>
+
+</body>
+</html>
